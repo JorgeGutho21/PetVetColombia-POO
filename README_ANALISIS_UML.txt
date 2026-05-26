@@ -1,24 +1,24 @@
 UNIVERSIDAD POPULAR DEL CESAR
-Programacion II - Parcial Segundo Corte
-Sistema de Gestion Veterinaria PetVet Colombia
+Programación II - Parcial Segundo Corte
+Sistema de Gestión Veterinaria PetVet Colombia
 Autor: Jorge Alfonso Gutierrez Thomas
 
 1. ANALISIS DEL PROBLEMA
 
 El sistema permite administrar dueños, servicios veterinarios y citas.
-La informacion se guarda en memoria usando ArrayList, tal como pide la rubrica.
+La información se guarda en memoria usando ArrayList, tal como pide la rúbrica.
 
 Clases principales:
-- Dueno: guarda la informacion del dueño y su mascota principal.
+- Dueno: guarda la información del dueño y su mascota principal.
 - Servicio: clase padre abstracta para los servicios veterinarios.
 - ServicioBasico: clase hija de Servicio.
 - ServicioEspecializado: clase hija de Servicio.
 - Cita: relaciona un dueño con un servicio y calcula el total.
-- Main: contiene el menu, los ArrayList y la logica del sistema.
+- Main: contiene el menú, los ArrayList y la lógica del sistema.
 
 2. HERENCIA
 
-Servicio es la clase padre.
+Servicio es la clase padre abstracta.
 ServicioBasico y ServicioEspecializado heredan de Servicio.
 
 La clase Servicio tiene el metodo abstracto:
@@ -34,7 +34,9 @@ Una Cita tiene:
 - un Dueno
 - un Servicio
 
-Esto representa que un dueño agenda una cita para un servicio.
+Esto representa que un dueño agenda una cita para que su mascota reciba un servicio.
+El precio de la cita se calcula usando el método polimórfico calcularPrecioFinal()
+del servicio que se haya escogido.
 
 4. DIAGRAMA UML EN TEXTO
 
@@ -119,20 +121,21 @@ Main
 
 5. VALIDACIONES IMPLEMENTADAS
 
-- Cedula duplicada.
+- Cédula duplicada: "Ya existe un dueño registrado con esa cédula".
 - Email sin @ usando contains().
 - Campos obligatorios.
 - Edad de mascota mayor o igual a 0.
-- Codigo de servicio unico.
+- Código de servicio único.
 - Cupos totales mayor a 0.
-- Precio base mayor a 0.
+- Precio base mayor a 0: "El precio del servicio debe ser mayor a cero".
 - Servicio disponible antes de agendar.
-- Cupos suficientes.
-- Cita entre 1 y 3 cupos.
-- Codigo de cita unico.
-- Cancelacion de cita con devolucion de cupos.
-- Consulta de cita por codigo.
-- Listado de citas por cedula del dueño.
+- Cupos suficientes: "No hay cupos disponibles para este servicio".
+- Máximo 3 cupos: "No se pueden reservar más de 3 cupos por cita".
+- Los cupos restantes nunca pueden quedar negativos ni superar los cupos totales.
+- Código de cita único.
+- Cancelación de cita con devolución de cupos.
+- Consulta de cita por código: "No se encontró la cita con ese código".
+- Listado de citas por cédula del dueño.
 - Total de dueños registrados.
 
 6. COMO EJECUTAR
@@ -147,3 +150,8 @@ Verificar que la carpeta src tenga:
 - entities/Cita.java
 
 Ejecutar Main.java.
+
+El programa carga los datos de Sofía Morales, el servicio especializado SV050
+y un servicio básico para poder demostrar rápidamente los casos del enunciado.
+Para probar la cita solicitada se puede escoger la opción 4, usar el código C001,
+la cédula 1122334455, el servicio SV050 y reservar 1 cupo.

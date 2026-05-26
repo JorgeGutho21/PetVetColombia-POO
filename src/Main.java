@@ -31,11 +31,11 @@ public class Main {
             System.out.println("       Autor: Jorge Alfonso Gutierrez Thomas");
             System.out.println("==============================================");
             System.out.println("1. Registrar dueño");
-            System.out.println("2. Registrar servicio basico");
+            System.out.println("2. Registrar servicio básico");
             System.out.println("3. Registrar servicio especializado");
             System.out.println("4. Agendar cita");
             System.out.println("5. Cancelar cita");
-            System.out.println("6. Consultar cita por codigo");
+            System.out.println("6. Consultar cita por código");
             System.out.println("7. Listar citas por dueño");
             System.out.println("8. Mostrar total de dueños");
             System.out.println("9. Mostrar servicios");
@@ -44,6 +44,12 @@ public class Main {
             System.out.print("Digite una opcion: ");
 
             try {
+                // Si se cierra la entrada de consola, el programa finaliza sin quedar en ciclo.
+                if (!sc.hasNextLine()) {
+                    System.out.println("\nFin del programa.");
+                    break;
+                }
+
                 op = Integer.parseInt(sc.nextLine());
 
                 switch (op) {
@@ -86,7 +92,7 @@ public class Main {
                 }
 
             } catch (Exception e) {
-                System.out.println("Ocurrio un error: " + e.getMessage());
+                System.out.println("Ocurrió un error: " + e.getMessage());
             }
 
         } while (op != 0);
@@ -95,11 +101,11 @@ public class Main {
     public static void registrarDueno() {
         System.out.println("\n--- REGISTRO DE DUEÑO ---");
 
-        System.out.print("Cedula: ");
+        System.out.print("Cédula: ");
         String cedula = sc.nextLine();
 
         if (buscarDueno(cedula) != null) {
-            System.out.println("Ya existe un dueño registrado con esa cedula");
+            System.out.println("Ya existe un dueño registrado con esa cédula");
             return;
         }
 
@@ -109,18 +115,13 @@ public class Main {
         System.out.print("Apellidos completos: ");
         String apellidos = sc.nextLine();
 
-        System.out.print("Correo electronico: ");
+        System.out.print("Correo electrónico: ");
         String email = sc.nextLine();
 
-        if (!email.contains("@")) {
-            System.out.println("El email debe contener el simbolo @");
-            return;
-        }
-
-        System.out.print("Telefono: ");
+        System.out.print("Teléfono: ");
         String telefono = sc.nextLine();
 
-        System.out.print("Direccion: ");
+        System.out.print("Dirección: ");
         String direccion = sc.nextLine();
 
         System.out.print("Nombre de la mascota: ");
@@ -142,6 +143,11 @@ public class Main {
             return;
         }
 
+        if (!email.contains("@")) {
+            System.out.println("El email debe contener el símbolo @");
+            return;
+        }
+
         if (edad < 0) {
             System.out.println("La edad de la mascota debe ser mayor o igual a 0");
             return;
@@ -156,20 +162,20 @@ public class Main {
     }
 
     public static void registrarServicioBasico() {
-        System.out.println("\n--- REGISTRO DE SERVICIO BASICO ---");
+        System.out.println("\n--- REGISTRO DE SERVICIO BÁSICO ---");
 
-        System.out.print("Codigo del servicio: ");
+        System.out.print("Código del servicio: ");
         String codigo = sc.nextLine();
 
         if (buscarServicio(codigo) != null) {
-            System.out.println("Ya existe un servicio registrado con ese codigo");
+            System.out.println("Ya existe un servicio registrado con ese código");
             return;
         }
 
         System.out.print("Nombre del servicio: ");
         String nombre = sc.nextLine();
 
-        System.out.print("Descripcion: ");
+        System.out.print("Descripción: ");
         String descripcion = sc.nextLine();
 
         System.out.print("Fecha disponibilidad DD/MM/YYYY: ");
@@ -197,35 +203,42 @@ public class Main {
             return;
         }
 
-        System.out.print("Duracion estimada en minutos: ");
+        System.out.print("Duración estimada en minutos: ");
         int duracion = Integer.parseInt(sc.nextLine());
 
         System.out.print("Incluye certificado de salud Si/No: ");
         String certificado = sc.nextLine();
+
+        if (campoVacio(codigo) || campoVacio(nombre) || campoVacio(descripcion) ||
+                campoVacio(fecha) || campoVacio(hi) || campoVacio(hf) ||
+                campoVacio(certificado)) {
+            System.out.println("Todos los campos son obligatorios");
+            return;
+        }
 
         ServicioBasico s = new ServicioBasico(codigo, nombre, descripcion, fecha,
                 hi, hf, cupos, precio, "Disponible", duracion, certificado);
 
         servicios.add(s);
 
-        System.out.println("Servicio basico registrado correctamente.");
+        System.out.println("Servicio básico registrado correctamente.");
     }
 
     public static void registrarServicioEspecializado() {
         System.out.println("\n--- REGISTRO DE SERVICIO ESPECIALIZADO ---");
 
-        System.out.print("Codigo del servicio: ");
+        System.out.print("Código del servicio: ");
         String codigo = sc.nextLine();
 
         if (buscarServicio(codigo) != null) {
-            System.out.println("Ya existe un servicio registrado con ese codigo");
+            System.out.println("Ya existe un servicio registrado con ese código");
             return;
         }
 
         System.out.print("Nombre del servicio: ");
         String nombre = sc.nextLine();
 
-        System.out.print("Descripcion: ");
+        System.out.print("Descripción: ");
         String descripcion = sc.nextLine();
 
         System.out.print("Fecha disponibilidad DD/MM/YYYY: ");
@@ -256,11 +269,23 @@ public class Main {
         System.out.print("Especialidad requerida: ");
         String especialidad = sc.nextLine();
 
-        System.out.print("Requiere examenes previos Si/No: ");
+        System.out.print("Requiere exámenes previos Si/No: ");
         String examenes = sc.nextLine();
 
-        System.out.print("Cargo adicional por especializacion: ");
+        System.out.print("Cargo adicional por especialización: ");
         double cargo = Double.parseDouble(sc.nextLine());
+
+        if (campoVacio(codigo) || campoVacio(nombre) || campoVacio(descripcion) ||
+                campoVacio(fecha) || campoVacio(hi) || campoVacio(hf) ||
+                campoVacio(especialidad) || campoVacio(examenes)) {
+            System.out.println("Todos los campos son obligatorios");
+            return;
+        }
+
+        if (cargo < 0) {
+            System.out.println("El cargo adicional no puede ser negativo");
+            return;
+        }
 
         ServicioEspecializado s = new ServicioEspecializado(codigo, nombre, descripcion,
                 fecha, hi, hf, cupos, precio, "Disponible", especialidad, examenes, cargo);
@@ -273,44 +298,49 @@ public class Main {
     public static void agendarCita() {
         System.out.println("\n--- AGENDAR CITA ---");
 
-        System.out.print("Codigo de cita: ");
+        System.out.print("Código de cita: ");
         String codigoCita = sc.nextLine();
 
         if (buscarCita(codigoCita) != null) {
-            System.out.println("Ya existe una cita registrada con ese codigo");
+            System.out.println("Ya existe una cita registrada con ese código");
             return;
         }
 
-        System.out.print("Cedula del dueño: ");
+        System.out.print("Cédula del dueño: ");
         String cedula = sc.nextLine();
 
         Dueno d = buscarDueno(cedula);
 
         if (d == null) {
-            System.out.println("No se encontro el dueño con esa cedula");
+            System.out.println("No se encontró el dueño con esa cédula");
             return;
         }
 
-        System.out.print("Codigo del servicio: ");
+        System.out.print("Código del servicio: ");
         String codigoServicio = sc.nextLine();
 
         Servicio s = buscarServicio(codigoServicio);
 
         if (s == null) {
-            System.out.println("No se encontro el servicio con ese codigo");
+            System.out.println("No se encontró el servicio con ese código");
             return;
         }
 
         if (!s.getEstado().equalsIgnoreCase("Disponible")) {
-            System.out.println("No se puede agendar en un servicio que no esta Disponible");
+            System.out.println("No se puede agendar en un servicio que no está Disponible");
             return;
         }
 
         System.out.print("Cantidad de cupos a reservar: ");
         int cupos = Integer.parseInt(sc.nextLine());
 
-        if (cupos < 1 || cupos > 3) {
-            System.out.println("No se pueden reservar mas de 3 cupos por cita");
+        if (cupos < 1) {
+            System.out.println("La cita debe reservar mínimo 1 cupo");
+            return;
+        }
+
+        if (cupos > 3) {
+            System.out.println("No se pueden reservar más de 3 cupos por cita");
             return;
         }
 
@@ -335,13 +365,13 @@ public class Main {
     public static void cancelarCita() {
         System.out.println("\n--- CANCELAR CITA ---");
 
-        System.out.print("Codigo de cita: ");
+        System.out.print("Código de cita: ");
         String codigo = sc.nextLine();
 
         Cita c = buscarCita(codigo);
 
         if (c == null) {
-            System.out.println("No se encontro la cita con ese codigo");
+            System.out.println("No se encontró la cita con ese código");
             return;
         }
 
@@ -358,15 +388,15 @@ public class Main {
     }
 
     public static void consultarCita() {
-        System.out.println("\n--- CONSULTAR CITA POR CODIGO ---");
+        System.out.println("\n--- CONSULTAR CITA POR CÓDIGO ---");
 
-        System.out.print("Codigo de cita: ");
+        System.out.print("Código de cita: ");
         String codigo = sc.nextLine();
 
         Cita c = buscarCita(codigo);
 
         if (c == null) {
-            System.out.println("No se encontro la cita con ese codigo");
+            System.out.println("No se encontró la cita con ese código");
             return;
         }
 
@@ -376,13 +406,13 @@ public class Main {
     public static void listarCitasPorDueno() {
         System.out.println("\n--- CITAS POR DUEÑO ---");
 
-        System.out.print("Cedula del dueño: ");
+        System.out.print("Cédula del dueño: ");
         String cedula = sc.nextLine();
 
         Dueno d = buscarDueno(cedula);
 
         if (d == null) {
-            System.out.println("No se encontro el dueño con esa cedula");
+            System.out.println("No se encontró el dueño con esa cédula");
             return;
         }
 

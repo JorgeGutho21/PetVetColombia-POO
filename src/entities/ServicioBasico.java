@@ -17,15 +17,15 @@ public class ServicioBasico extends Servicio {
 
     @Override
     public double calcularPrecioFinal() {
-        // El servicio basico no tiene cargo adicional
+        // Un servicio básico conserva su precio base.
         return getPrecioBase();
     }
 
     @Override
     public void printData() {
         super.printData();
-        System.out.println("Tipo: Basico");
-        System.out.println("Duracion estimada: " + duracionEstimada + " minutos");
+        System.out.println("Tipo: Básico");
+        System.out.println("Duración estimada: " + duracionEstimada + " minutos");
         System.out.println("Incluye certificado: " + incluyeCertificado);
     }
 

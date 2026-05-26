@@ -2,7 +2,7 @@ package entities;
 
 public abstract class Servicio {
 
-    // Esta clase padre representa la informacion comun de cualquier servicio veterinario
+    // Esta clase padre reúne los datos que comparten todos los servicios veterinarios.
     private String codigo;
     private String nombre;
     private String descripcion;
@@ -29,13 +29,13 @@ public abstract class Servicio {
         this.estado = estado;
     }
 
-    // Metodo abstracto: cada hijo calcula el precio final a su manera
+    // Cada clase hija resuelve el precio según el tipo de servicio.
     public abstract double calcularPrecioFinal();
 
     public void printData() {
-        System.out.println("Codigo servicio: " + codigo);
+        System.out.println("Código servicio: " + codigo);
         System.out.println("Nombre: " + nombre);
-        System.out.println("Descripcion: " + descripcion);
+        System.out.println("Descripción: " + descripcion);
         System.out.println("Fecha: " + fechaDisponibilidad);
         System.out.println("Hora: " + horaInicio + " - " + horaFin);
         System.out.println("Cupos totales: " + cuposTotales);
@@ -46,11 +46,18 @@ public abstract class Servicio {
     }
 
     public void descontarCupos(int cantidad) {
-        cuposRestantes = cuposRestantes - cantidad;
+        if (cantidad > 0 && cantidad <= cuposRestantes) {
+            cuposRestantes = cuposRestantes - cantidad;
+        }
     }
 
     public void devolverCupos(int cantidad) {
-        cuposRestantes = cuposRestantes + cantidad;
+        if (cantidad > 0) {
+            cuposRestantes = cuposRestantes + cantidad;
+            if (cuposRestantes > cuposTotales) {
+                cuposRestantes = cuposTotales;
+            }
+        }
     }
 
     public String getCodigo() {
@@ -114,7 +121,9 @@ public abstract class Servicio {
     }
 
     public void setCuposRestantes(int cuposRestantes) {
-        this.cuposRestantes = cuposRestantes;
+        if (cuposRestantes >= 0 && cuposRestantes <= cuposTotales) {
+            this.cuposRestantes = cuposRestantes;
+        }
     }
 
     public double getPrecioBase() {

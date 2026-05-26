@@ -10,6 +10,7 @@ public class Cita {
     private double precioTotal;
     private String estado;
 
+    // Una cita relaciona al dueño con el servicio elegido para su mascota.
     public Cita(String codigo, Dueno dueno, Servicio servicio, int cantidadCupos,
                 String fechaAgendada, String estado) {
         this.codigo = codigo;
@@ -22,11 +23,11 @@ public class Cita {
     }
 
     public void printData() {
-        System.out.println("Codigo cita: " + codigo);
-        System.out.println("Cedula dueño: " + dueno.getCedula());
+        System.out.println("Código cita: " + codigo);
+        System.out.println("Cédula dueño: " + dueno.getCedula());
         System.out.println("Dueño: " + dueno.getNombres() + " " + dueno.getApellidos());
         System.out.println("Mascota: " + dueno.getNombreMascota());
-        System.out.println("Codigo servicio: " + servicio.getCodigo());
+        System.out.println("Código servicio: " + servicio.getCodigo());
         System.out.println("Servicio: " + servicio.getNombre());
         System.out.println("Cupos reservados: " + cantidadCupos);
         System.out.println("Fecha agendada: " + fechaAgendada);

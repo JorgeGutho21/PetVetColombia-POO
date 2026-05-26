@@ -112,11 +112,11 @@ public class Dueno {
     }
 
     public void printData() {
-        System.out.println("Cedula: " + cedula);
+        System.out.println("Cédula: " + cedula);
         System.out.println("Dueño: " + nombres + " " + apellidos);
         System.out.println("Email: " + email);
-        System.out.println("Telefono: " + telefono);
-        System.out.println("Direccion: " + direccion);
+        System.out.println("Teléfono: " + telefono);
+        System.out.println("Dirección: " + direccion);
         System.out.println("Mascota: " + nombreMascota);
         System.out.println("Especie: " + especieMascota);
         System.out.println("Raza: " + razaMascota);

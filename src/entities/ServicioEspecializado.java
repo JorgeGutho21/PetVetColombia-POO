@@ -20,7 +20,7 @@ public class ServicioEspecializado extends Servicio {
 
     @Override
     public double calcularPrecioFinal() {
-        // El servicio especializado suma el cargo adicional
+        // El servicio especializado necesita sumar el cargo del especialista.
         return getPrecioBase() + cargoAdicional;
     }
 
@@ -29,7 +29,7 @@ public class ServicioEspecializado extends Servicio {
         super.printData();
         System.out.println("Tipo: Especializado");
         System.out.println("Especialidad requerida: " + especialidadRequerida);
-        System.out.println("Requiere examenes: " + requiereExamenes);
+        System.out.println("Requiere exámenes: " + requiereExamenes);
         System.out.println("Cargo adicional: " + cargoAdicional);
     }
 
