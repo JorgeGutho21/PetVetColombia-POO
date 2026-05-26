@@ -17,16 +17,17 @@ public abstract class Servicio {
     public Servicio(String codigo, String nombre, String descripcion, String fechaDisponibilidad,
                     String horaInicio, String horaFin, int cuposTotales,
                     double precioBase, String estado) {
+        validarCampo(codigo);
         this.codigo = codigo;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaDisponibilidad = fechaDisponibilidad;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.cuposTotales = cuposTotales;
+        setNombre(nombre);
+        setDescripcion(descripcion);
+        setFechaDisponibilidad(fechaDisponibilidad);
+        setHoraInicio(horaInicio);
+        setHoraFin(horaFin);
+        setCuposTotales(cuposTotales);
         this.cuposRestantes = cuposTotales;
-        this.precioBase = precioBase;
-        this.estado = estado;
+        setPrecioBase(precioBase);
+        setEstado(estado);
     }
 
     // Cada clase hija resuelve el precio según el tipo de servicio.
@@ -64,15 +65,12 @@ public abstract class Servicio {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
+        validarCampo(nombre);
         this.nombre = nombre;
     }
 
@@ -81,6 +79,7 @@ public abstract class Servicio {
     }
 
     public void setDescripcion(String descripcion) {
+        validarCampo(descripcion);
         this.descripcion = descripcion;
     }
 
@@ -89,6 +88,10 @@ public abstract class Servicio {
     }
 
     public void setFechaDisponibilidad(String fechaDisponibilidad) {
+        validarCampo(fechaDisponibilidad);
+        if (!fechaDisponibilidad.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            throw new IllegalArgumentException("La fecha debe tener formato DD/MM/YYYY");
+        }
         this.fechaDisponibilidad = fechaDisponibilidad;
     }
 
@@ -97,6 +100,8 @@ public abstract class Servicio {
     }
 
     public void setHoraInicio(String horaInicio) {
+        validarCampo(horaInicio);
+        validarHora(horaInicio);
         this.horaInicio = horaInicio;
     }
 
@@ -105,6 +110,8 @@ public abstract class Servicio {
     }
 
     public void setHoraFin(String horaFin) {
+        validarCampo(horaFin);
+        validarHora(horaFin);
         this.horaFin = horaFin;
     }
 
@@ -113,7 +120,15 @@ public abstract class Servicio {
     }
 
     public void setCuposTotales(int cuposTotales) {
+        if (cuposTotales <= 0) {
+            throw new IllegalArgumentException("Los cupos totales deben ser mayor a cero");
+        }
+
         this.cuposTotales = cuposTotales;
+
+        if (cuposRestantes > cuposTotales) {
+            cuposRestantes = cuposTotales;
+        }
     }
 
     public int getCuposRestantes() {
@@ -121,9 +136,11 @@ public abstract class Servicio {
     }
 
     public void setCuposRestantes(int cuposRestantes) {
-        if (cuposRestantes >= 0 && cuposRestantes <= cuposTotales) {
-            this.cuposRestantes = cuposRestantes;
+        if (cuposRestantes < 0 || cuposRestantes > cuposTotales) {
+            throw new IllegalArgumentException("La cantidad de cupos restantes no es válida");
         }
+
+        this.cuposRestantes = cuposRestantes;
     }
 
     public double getPrecioBase() {
@@ -131,6 +148,10 @@ public abstract class Servicio {
     }
 
     public void setPrecioBase(double precioBase) {
+        if (precioBase <= 0) {
+            throw new IllegalArgumentException("El precio del servicio debe ser mayor a cero");
+        }
+
         this.precioBase = precioBase;
     }
 
@@ -139,6 +160,26 @@ public abstract class Servicio {
     }
 
     public void setEstado(String estado) {
+        validarCampo(estado);
+        if (!estado.equalsIgnoreCase("Disponible") &&
+                !estado.equalsIgnoreCase("En Curso") &&
+                !estado.equalsIgnoreCase("Finalizado") &&
+                !estado.equalsIgnoreCase("Cancelado")) {
+            throw new IllegalArgumentException("Estado de servicio no válido");
+        }
+
         this.estado = estado;
+    }
+
+    private void validarCampo(String dato) {
+        if (dato == null || dato.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
+    }
+
+    private void validarHora(String hora) {
+        if (!hora.matches("([01]\\d|2[0-3]):[0-5]\\d")) {
+            throw new IllegalArgumentException("La hora debe tener formato HH:MM");
+        }
     }
 }

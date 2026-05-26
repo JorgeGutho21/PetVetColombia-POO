@@ -68,6 +68,8 @@ public class Main {
                         System.out.println("Opción no válida.");
                         break;
                 }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             } catch (Exception e) {
                 System.out.println("Ocurrió un error: " + e.getMessage());
             }
@@ -120,8 +122,7 @@ public class Main {
         String especie = sc.nextLine();
         System.out.print("Raza de la mascota: ");
         String raza = sc.nextLine();
-        System.out.print("Edad de la mascota: ");
-        int edad = Integer.parseInt(sc.nextLine());
+        int edad = leerEnteroObligatorio("Edad de la mascota: ");
 
         Dueno dueno = new Dueno(cedula, nombres, apellidos, email, telefono,
                 direccion, mascota, especie, raza, edad);
@@ -144,12 +145,9 @@ public class Main {
         String horaInicio = sc.nextLine();
         System.out.print("Hora fin HH:MM: ");
         String horaFin = sc.nextLine();
-        System.out.print("Cupos totales: ");
-        int cupos = Integer.parseInt(sc.nextLine());
-        System.out.print("Precio base: ");
-        double precio = Double.parseDouble(sc.nextLine());
-        System.out.print("Duración estimada en minutos: ");
-        int duracion = Integer.parseInt(sc.nextLine());
+        int cupos = leerEnteroObligatorio("Cupos totales: ");
+        double precio = leerDecimalObligatorio("Precio base: ");
+        int duracion = leerEnteroObligatorio("Duración estimada en minutos: ");
         System.out.print("Incluye certificado de salud Si/No: ");
         String certificado = sc.nextLine();
 
@@ -174,16 +172,13 @@ public class Main {
         String horaInicio = sc.nextLine();
         System.out.print("Hora fin HH:MM: ");
         String horaFin = sc.nextLine();
-        System.out.print("Cupos totales: ");
-        int cupos = Integer.parseInt(sc.nextLine());
-        System.out.print("Precio base: ");
-        double precio = Double.parseDouble(sc.nextLine());
+        int cupos = leerEnteroObligatorio("Cupos totales: ");
+        double precio = leerDecimalObligatorio("Precio base: ");
         System.out.print("Especialidad requerida: ");
         String especialidad = sc.nextLine();
         System.out.print("Requiere exámenes previos Si/No: ");
         String examenes = sc.nextLine();
-        System.out.print("Cargo adicional por especialización: ");
-        double cargo = Double.parseDouble(sc.nextLine());
+        double cargo = leerDecimalObligatorio("Cargo adicional por especialización: ");
 
         ServicioEspecializado servicio = new ServicioEspecializado(codigo, nombre, descripcion,
                 fecha, horaInicio, horaFin, cupos, precio, "Disponible",
@@ -201,8 +196,7 @@ public class Main {
         String cedula = sc.nextLine();
         System.out.print("Código del servicio: ");
         String codigoServicio = sc.nextLine();
-        System.out.print("Cantidad de cupos a reservar: ");
-        int cupos = Integer.parseInt(sc.nextLine());
+        int cupos = leerEnteroObligatorio("Cantidad de cupos a reservar: ");
         System.out.print("Fecha en que se agenda la cita DD/MM/YYYY: ");
         String fecha = sc.nextLine();
 
@@ -273,6 +267,36 @@ public class Main {
         for (int i = 0; i < duenos.size(); i++) {
             System.out.println("\nDueño No. " + (i + 1));
             duenos.get(i).printData();
+        }
+    }
+
+    public static int leerEnteroObligatorio(String mensaje) {
+        System.out.print(mensaje);
+        String dato = sc.nextLine();
+
+        if (dato.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
+
+        try {
+            return Integer.parseInt(dato);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Debe ingresar un número válido");
+        }
+    }
+
+    public static double leerDecimalObligatorio(String mensaje) {
+        System.out.print(mensaje);
+        String dato = sc.nextLine();
+
+        if (dato.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
+
+        try {
+            return Double.parseDouble(dato);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Debe ingresar un número válido");
         }
     }
 }

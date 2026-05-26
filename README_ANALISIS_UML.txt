@@ -28,6 +28,12 @@ El proyecto utiliza cuatro capas, manteniendo un Main sencillo para el menú:
 Main.java es el punto de entrada: muestra el menú, lee los datos digitados y
 presenta los resultados que entrega el controlador.
 
+Las entidades también protegen sus propios datos. Así, un setter no permite
+dejar un precio en cero, cupos negativos ni estados diferentes a los definidos
+en el enunciado.
+La cédula y los códigos no tienen setter porque son identificadores únicos:
+se asignan al crear el objeto y no deben cambiar después del registro.
+
 3. HERENCIA Y POLIMORFISMO
 
 Servicio es la clase padre abstracta.
@@ -120,18 +126,25 @@ PetVetController               Main
 - Email sin @ usando contains(): "El email debe contener el símbolo @".
 - Todos los campos obligatorios.
 - Edad de mascota mayor o igual a 0.
+- Especie de mascota válida: Perro, Gato, Conejo, Ave u Otro.
 - Código de servicio único.
+- Fecha DD/MM/YYYY y hora HH:MM.
+- Respuestas Si/No para certificado y exámenes previos.
 - Cupos totales mayores a 0.
 - Precio base mayor a 0: "El precio del servicio debe ser mayor a cero".
 - Servicio disponible antes de agendar.
 - Cupos suficientes: "No hay cupos disponibles para este servicio".
 - Máximo 3 cupos: "No se pueden reservar más de 3 cupos por cita".
 - Los cupos restantes no quedan negativos ni superan los cupos totales.
+- Los setters conservan precios, cupos y estados válidos después del registro.
+- Si cambia el servicio o la cantidad de una cita, su precio total se recalcula.
 - Código de cita único.
+- Cédulas y códigos permanecen fijos después de registrarse.
 - Cancelación de cita con devolución de cupos.
 - Consulta inexistente: "No se encontró la cita con ese código".
 - Listado de citas por cédula del dueño.
 - Total de dueños registrados.
+- Campos numéricos vacíos muestran "Todos los campos son obligatorios".
 
 7. ESTRUCTURA DEL PROYECTO
 

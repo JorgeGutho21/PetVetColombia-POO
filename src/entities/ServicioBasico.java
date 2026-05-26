@@ -11,8 +11,8 @@ public class ServicioBasico extends Servicio {
                           String incluyeCertificado) {
         super(codigo, nombre, descripcion, fechaDisponibilidad, horaInicio, horaFin,
                 cuposTotales, precioBase, estado);
-        this.duracionEstimada = duracionEstimada;
-        this.incluyeCertificado = incluyeCertificado;
+        setDuracionEstimada(duracionEstimada);
+        setIncluyeCertificado(incluyeCertificado);
     }
 
     @Override
@@ -34,6 +34,10 @@ public class ServicioBasico extends Servicio {
     }
 
     public void setDuracionEstimada(int duracionEstimada) {
+        if (duracionEstimada <= 0) {
+            throw new IllegalArgumentException("La duración debe ser mayor a cero");
+        }
+
         this.duracionEstimada = duracionEstimada;
     }
 
@@ -42,6 +46,13 @@ public class ServicioBasico extends Servicio {
     }
 
     public void setIncluyeCertificado(String incluyeCertificado) {
+        if (incluyeCertificado == null || incluyeCertificado.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
+        if (!incluyeCertificado.equalsIgnoreCase("Si") &&
+                !incluyeCertificado.equalsIgnoreCase("No")) {
+            throw new IllegalArgumentException("Incluye certificado debe ser Si o No");
+        }
         this.incluyeCertificado = incluyeCertificado;
     }
 }

@@ -19,24 +19,21 @@ public class Dueno {
     public Dueno(String cedula, String nombres, String apellidos, String email, String telefono,
                  String direccion, String nombreMascota, String especieMascota,
                  String razaMascota, int edadMascota) {
+        validarCampo(cedula);
         this.cedula = cedula;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.email = email;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.nombreMascota = nombreMascota;
-        this.especieMascota = especieMascota;
-        this.razaMascota = razaMascota;
-        this.edadMascota = edadMascota;
+        setNombres(nombres);
+        setApellidos(apellidos);
+        setEmail(email);
+        setTelefono(telefono);
+        setDireccion(direccion);
+        setNombreMascota(nombreMascota);
+        setEspecieMascota(especieMascota);
+        setRazaMascota(razaMascota);
+        setEdadMascota(edadMascota);
     }
 
     public String getCedula() {
         return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
     }
 
     public String getNombres() {
@@ -44,6 +41,7 @@ public class Dueno {
     }
 
     public void setNombres(String nombres) {
+        validarCampo(nombres);
         this.nombres = nombres;
     }
 
@@ -52,6 +50,7 @@ public class Dueno {
     }
 
     public void setApellidos(String apellidos) {
+        validarCampo(apellidos);
         this.apellidos = apellidos;
     }
 
@@ -60,6 +59,10 @@ public class Dueno {
     }
 
     public void setEmail(String email) {
+        validarCampo(email);
+        if (!email.contains("@")) {
+            throw new IllegalArgumentException("El email debe contener el símbolo @");
+        }
         this.email = email;
     }
 
@@ -68,6 +71,7 @@ public class Dueno {
     }
 
     public void setTelefono(String telefono) {
+        validarCampo(telefono);
         this.telefono = telefono;
     }
 
@@ -76,6 +80,7 @@ public class Dueno {
     }
 
     public void setDireccion(String direccion) {
+        validarCampo(direccion);
         this.direccion = direccion;
     }
 
@@ -84,6 +89,7 @@ public class Dueno {
     }
 
     public void setNombreMascota(String nombreMascota) {
+        validarCampo(nombreMascota);
         this.nombreMascota = nombreMascota;
     }
 
@@ -92,6 +98,14 @@ public class Dueno {
     }
 
     public void setEspecieMascota(String especieMascota) {
+        validarCampo(especieMascota);
+        if (!especieMascota.equalsIgnoreCase("Perro") &&
+                !especieMascota.equalsIgnoreCase("Gato") &&
+                !especieMascota.equalsIgnoreCase("Conejo") &&
+                !especieMascota.equalsIgnoreCase("Ave") &&
+                !especieMascota.equalsIgnoreCase("Otro")) {
+            throw new IllegalArgumentException("La especie debe ser Perro, Gato, Conejo, Ave u Otro");
+        }
         this.especieMascota = especieMascota;
     }
 
@@ -100,6 +114,7 @@ public class Dueno {
     }
 
     public void setRazaMascota(String razaMascota) {
+        validarCampo(razaMascota);
         this.razaMascota = razaMascota;
     }
 
@@ -108,7 +123,17 @@ public class Dueno {
     }
 
     public void setEdadMascota(int edadMascota) {
+        if (edadMascota < 0) {
+            throw new IllegalArgumentException("La edad de la mascota debe ser mayor o igual a 0");
+        }
+
         this.edadMascota = edadMascota;
+    }
+
+    private void validarCampo(String dato) {
+        if (dato == null || dato.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
     }
 
     public void printData() {

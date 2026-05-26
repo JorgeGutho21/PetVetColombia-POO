@@ -13,9 +13,9 @@ public class ServicioEspecializado extends Servicio {
                                  String requiereExamenes, double cargoAdicional) {
         super(codigo, nombre, descripcion, fechaDisponibilidad, horaInicio, horaFin,
                 cuposTotales, precioBase, estado);
-        this.especialidadRequerida = especialidadRequerida;
-        this.requiereExamenes = requiereExamenes;
-        this.cargoAdicional = cargoAdicional;
+        setEspecialidadRequerida(especialidadRequerida);
+        setRequiereExamenes(requiereExamenes);
+        setCargoAdicional(cargoAdicional);
     }
 
     @Override
@@ -38,6 +38,9 @@ public class ServicioEspecializado extends Servicio {
     }
 
     public void setEspecialidadRequerida(String especialidadRequerida) {
+        if (especialidadRequerida == null || especialidadRequerida.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
         this.especialidadRequerida = especialidadRequerida;
     }
 
@@ -46,6 +49,13 @@ public class ServicioEspecializado extends Servicio {
     }
 
     public void setRequiereExamenes(String requiereExamenes) {
+        if (requiereExamenes == null || requiereExamenes.trim().equals("")) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
+        if (!requiereExamenes.equalsIgnoreCase("Si") &&
+                !requiereExamenes.equalsIgnoreCase("No")) {
+            throw new IllegalArgumentException("Requiere exámenes debe ser Si o No");
+        }
         this.requiereExamenes = requiereExamenes;
     }
 
@@ -54,6 +64,10 @@ public class ServicioEspecializado extends Servicio {
     }
 
     public void setCargoAdicional(double cargoAdicional) {
+        if (cargoAdicional < 0) {
+            throw new IllegalArgumentException("El cargo adicional no puede ser negativo");
+        }
+
         this.cargoAdicional = cargoAdicional;
     }
 }
