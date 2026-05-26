@@ -14,10 +14,6 @@ public class PetVetService {
     // En esta capa quedan las reglas: registrar, agendar, cancelar y validar.
     private PetVetRepository repository = new PetVetRepository();
 
-    public PetVetService() {
-        cargarDatosPrueba();
-    }
-
     public String registrarDueno(Dueno dueno) {
         if (repository.buscarDueno(dueno.getCedula()) != null) {
             return "Ya existe un dueño registrado con esa cédula";
@@ -149,6 +145,10 @@ public class PetVetService {
     }
 
     public String cancelarCita(String codigo) {
+        if (campoVacio(codigo)) {
+            return "Todos los campos son obligatorios";
+        }
+
         Cita cita = repository.buscarCita(codigo);
 
         if (cita == null) {
@@ -192,26 +192,5 @@ public class PetVetService {
 
     private boolean campoVacio(String dato) {
         return dato == null || dato.trim().equals("");
-    }
-
-    private void cargarDatosPrueba() {
-        // Estos datos permiten probar rápido el caso de uso sin escribir todo desde cero.
-        Dueno dueno = new Dueno("1122334455", "Sofia", "Morales",
-                "sofia.morales@email.com", "3208765432",
-                "Cra 10 #45-20, Bogota", "Max", "Perro",
-                "Golden Retriever", 3);
-
-        Servicio especializado = new ServicioEspecializado("SV050", "Cirugia de cadera",
-                "Procedimiento especializado para mascota",
-                "10/04/2025", "09:00", "12:00",
-                2, 350000, "Disponible", "Ortopedia", "Si", 80000);
-
-        Servicio basico = new ServicioBasico("SV001", "Consulta general",
-                "Revision general de la mascota", "10/04/2025", "08:00", "08:30",
-                5, 50000, "Disponible", 30, "Si");
-
-        repository.guardarDueno(dueno);
-        repository.guardarServicio(especializado);
-        repository.guardarServicio(basico);
     }
 }

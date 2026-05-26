@@ -28,7 +28,7 @@ public class Main {
                     break;
                 }
 
-                opcion = Integer.parseInt(sc.nextLine());
+                opcion = leerEnteroObligatorio("");
 
                 switch (opcion) {
                     case 1:
@@ -254,6 +254,11 @@ public class Main {
         System.out.println("\n--- LISTA DE SERVICIOS ---");
         ArrayList<Servicio> servicios = controlador.listarServicios();
 
+        if (servicios.size() == 0) {
+            System.out.println("No hay servicios registrados.");
+            return;
+        }
+
         for (int i = 0; i < servicios.size(); i++) {
             System.out.println("\nServicio No. " + (i + 1));
             servicios.get(i).printData();
@@ -263,6 +268,11 @@ public class Main {
     public static void mostrarDuenos() {
         System.out.println("\n--- LISTA DE DUEÑOS ---");
         ArrayList<Dueno> duenos = controlador.listarDuenos();
+
+        if (duenos.size() == 0) {
+            System.out.println("No hay dueños registrados.");
+            return;
+        }
 
         for (int i = 0; i < duenos.size(); i++) {
             System.out.println("\nDueño No. " + (i + 1));

@@ -103,6 +103,7 @@ public class Cita {
     }
 
     public void setEstado(String estado) {
+        validarCampo(estado);
         if (!estado.equalsIgnoreCase("Confirmada") &&
                 !estado.equalsIgnoreCase("Cancelada") &&
                 !estado.equalsIgnoreCase("Completada")) {

@@ -47,17 +47,24 @@ public abstract class Servicio {
     }
 
     public void descontarCupos(int cantidad) {
-        if (cantidad > 0 && cantidad <= cuposRestantes) {
-            cuposRestantes = cuposRestantes - cantidad;
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad de cupos debe ser mayor a cero");
         }
+        if (cantidad > cuposRestantes) {
+            throw new IllegalArgumentException("No hay cupos disponibles para este servicio");
+        }
+
+        cuposRestantes = cuposRestantes - cantidad;
     }
 
     public void devolverCupos(int cantidad) {
-        if (cantidad > 0) {
-            cuposRestantes = cuposRestantes + cantidad;
-            if (cuposRestantes > cuposTotales) {
-                cuposRestantes = cuposTotales;
-            }
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad de cupos debe ser mayor a cero");
+        }
+
+        cuposRestantes = cuposRestantes + cantidad;
+        if (cuposRestantes > cuposTotales) {
+            cuposRestantes = cuposTotales;
         }
     }
 

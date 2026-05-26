@@ -175,6 +175,10 @@ Desde consola se puede compilar en una carpeta de salida:
 javac --release 17 -encoding UTF-8 -d build src/Main.java src/entities/*.java src/repositories/*.java src/services/*.java src/controllers/*.java
 java -cp build Main
 
-El programa carga los datos de Sofía Morales y el servicio especializado SV050
-para probar rápidamente el caso del parcial: agendar C001, cédula 1122334455,
-servicio SV050 y 1 cupo produce un total de 430000.
+El programa inicia con las listas vacías, de modo que cada registro se realiza
+desde el menú y se puede demostrar el proceso completo.
+
+Para comprobar el ejemplo del parcial se registra primero a Sofía Morales con
+cédula 1122334455, luego el servicio especializado SV050 con precio base
+350000 y cargo adicional 80000. Al agendar la cita C001 por 1 cupo, el total
+mostrado debe ser 430000 y al cancelarla el cupo debe regresar al servicio.
